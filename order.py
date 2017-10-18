@@ -6,7 +6,7 @@ class Menu:
     try:
       return self.d[i]
     except:
-        print('not in menu')
+      print('not in menu')
         
   def __setitem__(self, key, item): 
     self.d[key] = item
@@ -21,26 +21,32 @@ class Menu:
     
 class Order:
   d = {}
+  ord = {}
+  def __init__(self, m):
+    for i in m.d:
+      self.d[i] = m.d[i]
+      
   def __getitem__(self, i):
     return self.d[i]
       
   def __setitem__(self, key, item): 
-    Mobj = Menu()
-    if Mobj[key] is not None:
-      if Mobj[key] == item:
-        self.d[key] = item
+    try:
+      if self.d[key] == item:
+        self.ord[key] = item
       else:
         print 'wrong price'
+    except:
+      print 'not in menu'
       
   def show(self):
     print 'order'
-    for i in self.d.items():
+    for i in self.ord.items():
       print str(i[0]) + ' costs ' + str(i[1])
     
   
 c = Menu()
 c['idly'] = 20
 c.show()
-o = Order()
-o['vaa'] = 10
+o = Order(c)
+o['vada'] = 10
 o.show()
