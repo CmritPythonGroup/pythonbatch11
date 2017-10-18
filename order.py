@@ -1,6 +1,6 @@
 class Menu:
   def __init__(self):
-    self.d = {'vada' : 10}
+    self.d = {'vada' : 10, 'idly' : 20}
     
   def __getitem__(self, i):
     try:
@@ -20,9 +20,9 @@ class Menu:
     self.d[a] = b
     
 class Order:
-  d = {}
-  ord = {}
   def __init__(self, m):
+    self.d = {}
+    self.ord = {}
     for i in m.d:
       self.d[i] = m.d[i]
       
@@ -48,5 +48,7 @@ c = Menu()
 c['idly'] = 20
 c.show()
 o = Order(c)
+o2 = Order(c)
 o['vada'] = 10
 o.show()
+o2.show()
