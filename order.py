@@ -35,14 +35,13 @@ class Order:
       print 'not in menu. error - ' + repr(error)
       
   def __setitem__(self, key, item): 
-    try:
-      #if self.d[key] == item:
       if key in self.d:
-        self.ord[key] = item
+        if self.d[key] == item:
+          self.ord[key] = item
+        else:
+          raise Exception('wrong price')
       else:
-        print 'wrong price'
-    except Exception as error:
-      print 'not in menu. error - ' + repr(error)
+        raise Exception('not in menu')
       
   def show(self):
     print 'order :'
