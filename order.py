@@ -1,17 +1,23 @@
+class ITEMNOTINMENU(Exception):
+  pass
+class WrongPrice(Exception):
+  pass
+
+
 class Menu:
-  def __init__(self):
+  def _init_(self):
     self.d = {'vada' : 10, 'idly' : 20}
     
-  def __contains__(self, key):
+  def _contains_(self, key):
     return key in self.d
     
-  def __getitem__(self, i):
-    try:
+  def _getitem_(self, i):
+    if i in self.d:
       return self.d[i]
-    except Exception as error:
-      print 'not in menu. error - ' + repr(error)
-        
-  def __setitem__(self, key, item): 
+    else:
+      raise ITEMNOTINMENU
+      
+  def _setitem_(self, key, item): 
     self.d[key] = item
     
   def show(self):
@@ -24,24 +30,24 @@ class Menu:
     
 class Order:
   d = Menu()
-  def __init__(self, m):
+  def _init_(self, m):
     self.d = m
     self.ord = {}
       
-  def __getitem__(self, i):
-    try:
+  def _getitem_(self, i):
+    if i in self.ord:
       return self.ord[i]
-    except Exception as error:
-      print 'not in menu. error - ' + repr(error)
+    else:
+      raise ITEMNOTINMENU
       
-  def __setitem__(self, key, item): 
+  def _setitem_(self, key, item): 
       if key in self.d:
         if self.d[key] == item:
           self.ord[key] = item
         else:
-          raise Exception('wrong price')
+          raise WrongPrice
       else:
-        raise Exception('not in menu')
+        raise ITEMNOTINMENU
       
   def show(self):
     print 'order :'
@@ -51,12 +57,21 @@ class Order:
   
 c = Menu()
 c['idly'] = 20
-print c['i']
+try:
+  print c['unknown']
+except ITEMNOTINMENU:
+  print 'not in menu'
+  
 c.show()
 o1 = Order(c)
 o2 = Order(c)
-o1['vada'] = 10
-o2['idly'] = 20
-print o1['vada']
+try:
+  o1['vada'] = 10
+  o2['idly'] = 20
+except ITEMNOTINMENU:
+  print 'not in menu'
+except WrongPrice:
+  print 'wrong price'
+  
 o1.show()
 o2.show()
