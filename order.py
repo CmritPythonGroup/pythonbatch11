@@ -3,21 +3,20 @@ class ITEMNOTINMENU(Exception):
 class WrongPrice(Exception):
   pass
 
-
 class Menu:
-  def _init_(self):
+  def __init__(self):
     self.d = {'vada' : 10, 'idly' : 20}
     
-  def _contains_(self, key):
+  def __contains__(self, key):
     return key in self.d
     
-  def _getitem_(self, i):
+  def __getitem__(self, i):
     if i in self.d:
       return self.d[i]
     else:
       raise ITEMNOTINMENU
       
-  def _setitem_(self, key, item): 
+  def __setitem__(self, key, item): 
     self.d[key] = item
     
   def show(self):
@@ -28,19 +27,19 @@ class Menu:
   def add(self, a, b):
     self.d[a] = b
     
-class Order:
+class Order():
   d = Menu()
-  def _init_(self, m):
+  def __init__(self, m):
     self.d = m
     self.ord = {}
       
-  def _getitem_(self, i):
+  def __getitem__(self, i):
     if i in self.ord:
       return self.ord[i]
     else:
       raise ITEMNOTINMENU
       
-  def _setitem_(self, key, item): 
+  def __setitem__(self, key, item): 
       if key in self.d:
         if self.d[key] == item:
           self.ord[key] = item
